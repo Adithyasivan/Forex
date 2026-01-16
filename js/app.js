@@ -1,3 +1,6 @@
+console.log("App loaded");
+console.log("LightweightCharts:", window.LightweightCharts);
+
 const chartContainer = document.getElementById("chart");
 
 const chart = LightweightCharts.createChart(chartContainer, {
@@ -19,7 +22,7 @@ const chart = LightweightCharts.createChart(chartContainer, {
   },
 });
 
-const candleSeries = chart.addCandlestickSeries({
+const candles = chart.addCandlestickSeries({
   upColor: "#22c55e",
   downColor: "#ef4444",
   borderUpColor: "#22c55e",
@@ -28,8 +31,7 @@ const candleSeries = chart.addCandlestickSeries({
   wickDownColor: "#ef4444",
 });
 
-// sample forex candle data
-candleSeries.setData([
+candles.setData([
   { time: "2024-01-01", open: 1.090, high: 1.095, low: 1.088, close: 1.092 },
   { time: "2024-01-02", open: 1.092, high: 1.098, low: 1.090, close: 1.097 },
   { time: "2024-01-03", open: 1.097, high: 1.100, low: 1.094, close: 1.095 },
