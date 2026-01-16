@@ -4,44 +4,39 @@
   <meta charset="UTF-8" />
   <title>Forex Analysis</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
 
-  <h1>Forex Analysis</h1>
-  <p class="subtitle">Rule-based forex candle analysis</p>
+<h1>Forex Analysis</h1>
+<p class="subtitle">Rule-based technical signals</p>
 
-  <div class="grid">
+<div class="grid">
+  <div class="card">
+    <h3>Forex Pair</h3>
+    <select>
+      <option>EUR / USD</option>
+      <option>GBP / USD</option>
+      <option>USD / JPY</option>
+    </select>
 
-    <div class="card">
-      <h3>Forex Pair</h3>
-      <select>
-        <option>EUR / USD</option>
-        <option>GBP / USD</option>
-        <option>USD / JPY</option>
-        <option>AUD / USD</option>
-      </select>
-
-      <h3 style="margin-top:20px;">Signal</h3>
-      <div class="signal wait">WAIT</div>
-      <p class="reason">Waiting for confirmation</p>
-    </div>
-
-    <div class="card">
-      <h3>Price Chart</h3>
-      <div id="chart"></div>
-    </div>
-
+    <h3 style="margin-top:20px;">Signal</h3>
+    <div class="signal wait">WAIT</div>
+    <p class="reason">Waiting for confirmation</p>
   </div>
 
-  <footer>
-    Educational use only. Not financial advice.
-  </footer>
+  <div class="card">
+    <h3>Price Chart</h3>
+    <div id="chart"></div>
+  </div>
+</div>
 
-  <!-- IMPORTANT: library first -->
-  <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
-  <script src="js/app.js"></script>
+<footer>
+  Educational use only. Not financial advice.
+</footer>
+
+<script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+<script src="js/app.js"></script>
 
 </body>
 </html>
