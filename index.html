@@ -9,33 +9,36 @@
 <body>
 
 <h1>Forex Analysis</h1>
-<p class="subtitle">Rule-based technical signals</p>
+<p class="subtitle">Live forex candles (free public API)</p>
 
 <div class="grid">
+
   <div class="card">
     <h3>Forex Pair</h3>
-    <select>
-      <option>EUR / USD</option>
-      <option>GBP / USD</option>
-      <option>USD / JPY</option>
+    <select id="pairSelect" name="pair">
+      <option value="EUR/USD">EUR / USD</option>
+      <option value="GBP/USD">GBP / USD</option>
+      <option value="USD/JPY">USD / JPY</option>
     </select>
 
     <h3 style="margin-top:20px;">Signal</h3>
     <div class="signal wait">WAIT</div>
-    <p class="reason">Waiting for confirmation</p>
+    <p class="reason">Indicators not added yet</p>
   </div>
 
   <div class="card">
     <h3>Price Chart</h3>
     <div id="chart"></div>
   </div>
+
 </div>
 
 <footer>
   Educational use only. Not financial advice.
 </footer>
 
-<script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+<!-- Stable chart library -->
+<script src="https://unpkg.com/lightweight-charts@4.1.0/dist/lightweight-charts.standalone.production.js"></script>
 <script src="js/app.js"></script>
 
 </body>
