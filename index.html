@@ -2,44 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Forex Analysis</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Momentum Stock Scanner</title>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
 
-<h1>Forex Analysis</h1>
-<p class="subtitle">Live forex candles (free public API)</p>
+<h1>Momentum Scanner</h1>
+<p class="subtitle">High volume + price surge + news</p>
 
-<div class="grid">
+<div id="stocks">Scanning…</div>
 
-  <div class="card">
-    <h3>Forex Pair</h3>
-    <select id="pairSelect" name="pair">
-      <option value="EUR/USD">EUR / USD</option>
-      <option value="GBP/USD">GBP / USD</option>
-      <option value="USD/JPY">USD / JPY</option>
-    </select>
+<footer>Educational use only. Not financial advice.</footer>
 
-    <h3 style="margin-top:20px;">Signal</h3>
-    <div class="signal wait">WAIT</div>
-    <p class="reason">Indicators not added yet</p>
-  </div>
-
-  <div class="card">
-    <h3>Price Chart</h3>
-    <div id="chart"></div>
-  </div>
-
-</div>
-
-<footer>
-  Educational use only. Not financial advice.
-</footer>
-
-<!-- Stable chart library -->
-<script src="https://unpkg.com/lightweight-charts@4.1.0/dist/lightweight-charts.standalone.production.js"></script>
 <script src="js/app.js"></script>
-
 </body>
 </html>

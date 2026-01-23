@@ -1,89 +1,76 @@
-const chartContainer = document.getElementById("chart");
-const pairSelect = document.getElementById("pairSelect");
+const container = document.getElementById("stocks");
 
-// ✅ Official Twelve Data demo key (safe to commit)
-const API_KEY = "demo";
+// small universe for now
+const SYMBOLS = [
+  "PLUG", "SOFI", "MARA", "RIOT", "FUBO",
+  "OPEN", "CHPT", "LCID", "BBAI", "NVOS"
+];
 
-/* -----------------------------
-   CREATE CHART
------------------------------ */
-
-const chart = LightweightCharts.createChart(chartContainer, {
-  width: chartContainer.clientWidth,
-  height: 360,
-  layout: {
-    backgroundColor: "#020617",
-    textColor: "#e5e7eb",
-  },
-  grid: {
-    vertLines: { color: "#1e293b" },
-    horzLines: { color: "#1e293b" },
-  },
-  rightPriceScale: {
-    borderColor: "#334155",
-  },
-  timeScale: {
-    borderColor: "#334155",
-  },
-});
-
-const candleSeries = chart.addCandlestickSeries({
-  upColor: "#22c55e",
-  downColor: "#ef4444",
-  borderUpColor: "#22c55e",
-  borderDownColor: "#ef4444",
-  wickUpColor: "#22c55e",
-  wickDownColor: "#ef4444",
-});
-
-/* -----------------------------
-   LOAD LIVE FOREX DATA
------------------------------ */
-
-async function loadLiveData(pair) {
-  const symbol = pair.replace("/", "");
-
-  const url = `https://api.twelvedata.com/time_series?symbol=${symbol}&interval=1h&outputsize=100&apikey=${API_KEY}`;
+async function fetchQuotes(symbols) {
+  const url =
+    "https://query1.finance.yahoo.com/v7/finance/quote?symbols=" +
+    symbols.join(",");
 
   const res = await fetch(url);
   const data = await res.json();
-
-  if (!data.values) {
-    console.error("API error:", data);
-    return;
-  }
-
-  const candles = data.values
-    .map(v => ({
-      time: v.datetime.split(" ")[0],
-      open: parseFloat(v.open),
-      high: parseFloat(v.high),
-      low: parseFloat(v.low),
-      close: parseFloat(v.close),
-    }))
-    .reverse(); // newest → oldest
-
-  candleSeries.setData(candles);
+  return data.quoteResponse.result;
 }
 
-/* -----------------------------
-   INITIAL LOAD
------------------------------ */
+async function fetchNews(symbol) {
+  const rssUrl =
+    "https://news.google.com/rss/search?q=" +
+    encodeURIComponent(symbol + " stock");
 
-loadLiveData(pairSelect.value);
+  const proxy =
+    "https://api.allorigins.win/raw?url=" + encodeURIComponent(rssUrl);
 
-/* -----------------------------
-   PAIR CHANGE HANDLER
------------------------------ */
+  const res = await fetch(proxy);
+  const text = await res.text();
 
-pairSelect.addEventListener("change", e => {
-  loadLiveData(e.target.value);
-});
+  const match = text.match(/<title><!\[CDATA\[(.*?)\]\]><\/title>/i);
+  return match ? match[1] : null;
+}
 
-/* -----------------------------
-   RESIZE HANDLER
------------------------------ */
+async function runScanner() {
+  container.innerHTML = "";
 
-window.addEventListener("resize", () => {
-  chart.applyOptions({ width: chartContainer.clientWidth });
-});
+  const quotes = await fetchQuotes(SYMBOLS);
+
+  for (const q of quotes) {
+    const price = q.regularMarketPrice;
+    const changePct = q.regularMarketChangePercent;
+    const volume = q.regularMarketVolume;
+    const avgVolume = q.averageDailyVolume3Month;
+
+    if (
+      price >= 2 &&
+      price <= 20 &&
+      changePct >= 10 &&
+      volume >= avgVolume * 5
+    ) {
+      const headline = await fetchNews(q.symbol);
+
+      const div = document.createElement("div");
+      div.className = "card";
+
+      div.innerHTML = `
+        <h3>${q.symbol} — ${q.shortName || ""}</h3>
+        <p><strong>Price:</strong> $${price.toFixed(2)}</p>
+        <p><strong>Move:</strong> +${changePct.toFixed(2)}%</p>
+        <p><strong>Volume:</strong> ${volume.toLocaleString()}
+           (avg ${avgVolume.toLocaleString()})</p>
+        <p class="news">
+          📰 ${headline || "No headline found"}
+        </p>
+      `;
+
+      container.appendChild(div);
+    }
+  }
+
+  if (!container.children.length) {
+    container.innerHTML = "No qualifying momentum stocks right now.";
+  }
+}
+
+runScanner();

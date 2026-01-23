@@ -1,14 +1,12 @@
 body {
-  margin: 0;
-  padding: 20px;
-  font-family: system-ui, sans-serif;
   background: #0f172a;
   color: #e5e7eb;
+  font-family: system-ui, sans-serif;
+  padding: 20px;
 }
 
 h1 {
   color: #38bdf8;
-  margin-bottom: 4px;
 }
 
 .subtitle {
@@ -16,43 +14,16 @@ h1 {
   margin-bottom: 20px;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 20px;
-}
-
 .card {
   background: #020617;
   padding: 16px;
   border-radius: 10px;
+  margin-bottom: 16px;
 }
 
-select {
-  width: 100%;
-  padding: 10px;
-  background: #020617;
-  color: #e5e7eb;
-  border: 1px solid #334155;
-  border-radius: 6px;
-}
-
-.signal {
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.wait {
-  color: #facc15;
-}
-
-.reason {
+.news {
+  color: #a7f3d0;
   font-size: 14px;
-  color: #94a3b8;
-}
-
-#chart {
-  height: 360px;
 }
 
 footer {
